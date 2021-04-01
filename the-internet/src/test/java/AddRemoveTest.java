@@ -21,8 +21,8 @@ public class AddRemoveTest {
     public void beforeTest(){
         System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
         driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1280, 720));
-        driver.navigate().to("http://the-internet.herokuapp.com/");
+        driver.manage().window().maximize();
+        driver.navigate().to("http://theinternet.przyklady.javastart.pl");
         WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='add_remove']"));
         addRemoveElement.click();
     }
