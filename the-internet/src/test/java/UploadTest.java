@@ -1,35 +1,21 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 
-public class UploadTest {
+public class UploadTest extends TestBase{
 
-    public static final String CHROMEDRIVER_EXE = "src/main/resources/chromedriver.exe";
     public static final String UPLOAD_FILE = "C:/SeleniumFiles/text.txt";
-    WebDriver driver;
-
-    @BeforeTest
-    public void beforeTest(){
-        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("http://theinternet.przyklady.javastart.pl");
-        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='upload']"));
-        addRemoveElement.click();
-    }
 
     @Test
     public void uploadFileTest(){
+        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='upload']"));
+        addRemoveElement.click();
+
         WebElement chooseFileButton = driver.findElement(By.id("file-upload"));
         chooseFileButton.sendKeys(UPLOAD_FILE);
 
@@ -46,11 +32,5 @@ public class UploadTest {
         String fileName = uploadedFiles.getText();
         String[] path = UPLOAD_FILE.split("/");
         assertEquals(fileName, path[path.length-1]);
-    }
-
-    @AfterTest
-    public void afterTest(){
-        driver.close();
-        driver.quit();
     }
 }

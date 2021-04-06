@@ -1,23 +1,16 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
-public class LoginTest {
+public class LoginTest extends TestBase{
 
-    private static final String CHROMEDRIVER_EXE = "src/main/resources/chromedriver.exe";
     private static final String CORRECT_USERNAME = "tomsmith";
     private static final String CORRECT_PASSWORD = "SuperSecretPassword!";
-    private WebDriver driver;
 
     @DataProvider(name = "loginData")
     private Object[][] testData(){
@@ -28,18 +21,11 @@ public class LoginTest {
         };
     };
 
-    @BeforeTest
-    public void beforeTest(){
-        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("http://theinternet.przyklady.javastart.pl");
-        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='login']"));
-        addRemoveElement.click();
-    }
-
     @Test(dataProvider = "loginData")
     public void failedLoginTest(String username, String password, String message){
+        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='login']"));
+        addRemoveElement.click();
+
         WebElement usernameField = driver.findElement(By.name("username"));
         usernameField.sendKeys(username);
 
@@ -61,6 +47,9 @@ public class LoginTest {
 
     @Test
     public void successLoginTest(){
+        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='login']"));
+        addRemoveElement.click();
+
         WebElement usernameField = driver.findElement(By.name("username"));
         usernameField.sendKeys(CORRECT_USERNAME);
 
@@ -82,11 +71,5 @@ public class LoginTest {
         successMessage = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("flash")));
         successText = successMessage.getText();
         assertEquals(successText, "You logged out of the secure area!\n×");
-    }
-
-    @AfterTest
-    public void afterTest(){
-        driver.close();
-        driver.quit();
     }
 }

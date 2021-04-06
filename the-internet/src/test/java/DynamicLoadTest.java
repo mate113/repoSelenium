@@ -1,29 +1,19 @@
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 
-public class DynamicLoadTest {
-
-    public static final String CHROMEDRIVER_EXE = "src//main//resources//chromedriver.exe";
-    WebDriver driver;
-
-    @BeforeMethod
-    public void beforeTest(){
-        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("http://theinternet.przyklady.javastart.pl");
-        WebElement contextMenuText = driver.findElement(By.cssSelector("a[href*='dynamic_loading']"));
-        contextMenuText.click();
-    }
+public class DynamicLoadTest extends TestBase{
 
     @Test
     public void dynamicLoadExampleOneTest(){
+        WebElement contextMenuText = driver.findElement(By.cssSelector("a[href*='dynamic_loading']"));
+        contextMenuText.click();
+
         chooseExample(1);
         WebElement startButton = driver.findElement(By.cssSelector("#start button"));
         startButton.click();
@@ -38,6 +28,9 @@ public class DynamicLoadTest {
 
     @Test
     public void dynamicLoadExampleTwoTest(){
+        WebElement contextMenuText = driver.findElement(By.cssSelector("a[href*='dynamic_loading']"));
+        contextMenuText.click();
+
         chooseExample(2);
         WebElement startButton = driver.findElement(By.cssSelector("#start button"));
         startButton.click();
@@ -48,13 +41,6 @@ public class DynamicLoadTest {
 
         String text = finishText.getText();
         assertEquals(text,"Hello World!");
-    }
-
-
-    @AfterMethod
-    public void afterTest(){
-        driver.close();
-        driver.quit();
     }
 
     public void chooseExample(int choice){

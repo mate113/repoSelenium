@@ -1,10 +1,5 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -12,23 +7,13 @@ import java.util.List;
 import static org.testng.Assert.assertTrue;
 
 
-public class AddRemoveTest {
-
-    public static final String CHROMEDRIVER_EXE = "src//main//resources//chromedriver.exe";
-    WebDriver driver;
-
-    @BeforeTest
-    public void beforeTest(){
-        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("http://theinternet.przyklady.javastart.pl");
-        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='add_remove']"));
-        addRemoveElement.click();
-    }
+public class AddRemoveTest extends TestBase{
 
     @Test
     public void addRemoveTest(){
+        WebElement addRemoveElement = driver.findElement(By.cssSelector("a[href*='add_remove']"));
+        addRemoveElement.click();
+
         WebElement addButton = driver.findElement(By.cssSelector("button"));
         addButton.click();
 
@@ -58,11 +43,5 @@ public class AddRemoveTest {
         elementsCount = elements.size();
 
         assertTrue(elementsCount == 0);
-    }
-
-    @AfterTest
-    public void afterTest(){
-        driver.close();
-        driver.quit();
     }
 }
