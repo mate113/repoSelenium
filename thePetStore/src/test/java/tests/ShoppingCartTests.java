@@ -1,38 +1,23 @@
 package tests;
 
 import org.testng.annotations.Test;
-import page.objects.*;
-import page.objects.animals.AngelfishListPage;
-import page.objects.animals.AnimalDetailsPage;
-import page.objects.animals.FishListPage;
-import page.objects.order.CheckoutPage;
-import page.objects.order.OrderSummaryPage;
-import page.objects.order.PaymentShipmentPage;
-import page.objects.order.ShoppingCartPage;
+import page.objects.LandingPage;
+import page.objects.LoginPage;
+import page.objects.TopMenuPage;
 
 import static org.testng.Assert.assertEquals;
 
 public class ShoppingCartTests extends TestBase {
 
     @Test
-    public void purchaseWhileNotLoggedIn(){
+    public void shouldNotBeAllowedToGoToCheckoutWhenNotLoggedIn(){
         LandingPage landingPage = new LandingPage();
-        landingPage.enterTheStore();
-
-        HomePage homePage = new HomePage();
-        homePage.clickOnFishText();
-
-        FishListPage fishListPage = new FishListPage();
-        fishListPage.clickOnAngelfishId();
-
-        AngelfishListPage angelfishListPage = new AngelfishListPage();
-        angelfishListPage.clickOnLargeAngelfishId();
-
-        AnimalDetailsPage animalDetailsPage = new AnimalDetailsPage();
-        animalDetailsPage.clickOnAddToCartButton();
-
-        ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
-        shoppingCartPage.clickOnProceedToCheckout();
+        landingPage.enterTheStore()
+                .clickOnFishText()
+                .clickOnAngelfishId()
+                .clickOnLargeAngelfishId()
+                .clickOnAddToCartButton()
+                .clickOnProceedToCheckout();
 
         LoginPage loginPage = new LoginPage();
         String warningMessage = loginPage.getWarningMessage();
@@ -41,38 +26,23 @@ public class ShoppingCartTests extends TestBase {
     }
 
     @Test
-    public void purchaseWhileLoggedIn(){
+    public void shouldBeAllowedToPurchaseWhenLoggedIn(){
         LandingPage landingPage = new LandingPage();
         landingPage.enterTheStore();
 
         TopMenuPage topMenuPage = new TopMenuPage();
-        topMenuPage.clickOnSignInLink();
+        String orderMessage = topMenuPage.clickOnSignInLink()
+                .typeIntoUsernameFiled("j2ee")
+                .typeIntoPasswordFiled("j2ee")
+                .pressLoginButton()
+                .clickOnFishText()
+                .clickOnAngelfishId()
+                .clickOnAddToCartLargeAngelfish()
+                .clickOnProceedToCheckout()
+                .clickOnContinueButton()
+                .clickOnConfirmButton()
+                .getMessage();
 
-        LoginPage loginPage = new LoginPage();
-        loginPage.typeIntoUsernameFiled("j2ee");
-        loginPage.typeIntoPasswordFiled("j2ee");
-        loginPage.pressLoginButton();
-
-        HomePage homePage = new HomePage();
-        homePage.clickOnFishText();
-
-        FishListPage fishListPage = new FishListPage();
-        fishListPage.clickOnAngelfishId();
-
-        AngelfishListPage angelfishListPage = new AngelfishListPage();
-        angelfishListPage.clickOnAddToCartLargeAngelfish();
-
-        ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
-        shoppingCartPage.clickOnProceedToCheckout();
-
-        PaymentShipmentPage paymentShipmentPage = new PaymentShipmentPage();
-        paymentShipmentPage.clickOnContinueButton();
-
-        CheckoutPage checkoutPage = new CheckoutPage();
-        checkoutPage.clickOnConfirmButton();
-
-        OrderSummaryPage orderSummaryPage = new OrderSummaryPage();
-        String orderMessage = orderSummaryPage.getMessage();
         assertEquals(orderMessage, "Thank you, your order has been submitted.");
     }
 }

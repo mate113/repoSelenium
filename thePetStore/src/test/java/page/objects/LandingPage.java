@@ -19,9 +19,10 @@ public class LandingPage {
         PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
-    public void enterTheStore(){
+    public HomePage enterTheStore(){
         WaitForElement.waitForElementToBeClickable(enterTheStoreLink);
         enterTheStoreLink.click();
         logger.info("Clicked on Enter The Store");
+        return new HomePage();
     }
 }

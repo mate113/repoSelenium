@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.objects.LandingPage;
 import page.objects.LoginPage;
@@ -9,53 +10,27 @@ import static org.testng.Assert.assertEquals;
 
 public class FailedLoginTests extends TestBase {
 
-    @Test
-    public void incorrectLoginAndPassword(){
+    @DataProvider(name = "incorrectLoginData")
+    private Object[][] getLoginData(){
+        return new Object[][]{
+                {"badUsername", "badPassword"},
+                {"badUsername", "j2ee"},
+                {"j2ee", "badPassword"}
+        };
+    };
+
+    @Test(dataProvider = "incorrectLoginData")
+    public void shouldNotLoginWithInvalidUsernameOrPassword(String username, String password){
         LandingPage landingPage = new LandingPage();
         landingPage.enterTheStore();
 
         TopMenuPage topMenuPage = new TopMenuPage();
-        topMenuPage.clickOnSignInLink();
+        topMenuPage.clickOnSignInLink()
+                .typeIntoUsernameFiled(username)
+                .typeIntoPasswordFiled(password)
+                .pressLoginButton();
 
         LoginPage loginPage = new LoginPage();
-        loginPage.typeIntoUsernameFiled("badUsername");
-        loginPage.typeIntoPasswordFiled("badPassword");
-        loginPage.pressLoginButton();
-
-        String failedLoginText = loginPage.getWarningMessage();
-        assertEquals(failedLoginText, "Invalid username or password. Signon failed.");
-    }
-
-    @Test
-    public void incorrectLoginAndCorrectPassword(){
-        LandingPage landingPage = new LandingPage();
-        landingPage.enterTheStore();
-
-        TopMenuPage topMenuPage = new TopMenuPage();
-        topMenuPage.clickOnSignInLink();
-
-        LoginPage loginPage = new LoginPage();
-        loginPage.typeIntoUsernameFiled("badUsername");
-        loginPage.typeIntoPasswordFiled("j2ee");
-        loginPage.pressLoginButton();
-
-        String failedLoginText = loginPage.getWarningMessage();
-        assertEquals(failedLoginText, "Invalid username or password. Signon failed.");
-    }
-
-    @Test
-    public void correctLoginAndIncorrectPassword(){
-        LandingPage landingPage = new LandingPage();
-        landingPage.enterTheStore();
-
-        TopMenuPage topMenuPage = new TopMenuPage();
-        topMenuPage.clickOnSignInLink();
-
-        LoginPage loginPage = new LoginPage();
-        loginPage.typeIntoUsernameFiled("j2ee");
-        loginPage.typeIntoPasswordFiled("badPassword");
-        loginPage.pressLoginButton();
-
         String failedLoginText = loginPage.getWarningMessage();
         assertEquals(failedLoginText, "Invalid username or password. Signon failed.");
     }

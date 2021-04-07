@@ -28,22 +28,25 @@ public class LoginPage {
         PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
-    public void typeIntoUsernameFiled(String username){
+    public LoginPage typeIntoUsernameFiled(String username){
         usernameField.clear();
         WaitForElement.waitForElementToBeVisible(usernameField);
         usernameField.sendKeys(username);
         logger.info("Typed into Username field: {}", username);
+        return this;
     }
 
-    public void typeIntoPasswordFiled(String password){
+    public LoginPage typeIntoPasswordFiled(String password){
         passwordField.clear();
         passwordField.sendKeys(password);
         logger.info("Typed into Password field: {}", password);
+        return this;
     }
 
-    public void pressLoginButton(){
+    public HomePage pressLoginButton(){
         loginButton.click();
         logger.info("Clicked on Login button");
+        return new HomePage();
     }
 
     public String getWarningMessage(){

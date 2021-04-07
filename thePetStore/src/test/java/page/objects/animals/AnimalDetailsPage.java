@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import driver.manager.DriverManager;
+import page.objects.order.ShoppingCartPage;
 import waits.WaitForElement;
 
 public class AnimalDetailsPage {
@@ -19,9 +20,10 @@ public class AnimalDetailsPage {
         PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
-    public void clickOnAddToCartButton(){
+    public ShoppingCartPage clickOnAddToCartButton(){
         WaitForElement.waitForElementToBeClickable(addItemToCartButton);
         addItemToCartButton.click();
         logger.info("Clicked on Add to Cart");
+        return new ShoppingCartPage();
     }
 }

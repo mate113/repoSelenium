@@ -8,20 +8,21 @@ import org.openqa.selenium.support.PageFactory;
 import driver.manager.DriverManager;
 import waits.WaitForElement;
 
-public class CheckoutPage {
+public class SecondConfirmTheInformationPage {
 
     private Logger logger = LogManager.getRootLogger();
 
     @FindBy(css = "a.Button[href*='newOrder']")
     private WebElement confirmButton;
 
-    public CheckoutPage() {
+    public SecondConfirmTheInformationPage() {
         PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
-    public void clickOnConfirmButton(){
+    public ThirdOrderSummaryPage clickOnConfirmButton(){
         WaitForElement.waitForElementToBeClickable(confirmButton);
         confirmButton.click();
         logger.info("Clicked on Confirm button");
+        return new ThirdOrderSummaryPage();
     }
 }

@@ -8,20 +8,21 @@ import org.openqa.selenium.support.PageFactory;
 import driver.manager.DriverManager;
 import waits.WaitForElement;
 
-public class PaymentShipmentPage {
+public class FirstPaymentShipmentPage {
 
     private Logger logger = LogManager.getRootLogger();
 
     @FindBy(name = "newOrder")
     private WebElement continueButton;
 
-    public PaymentShipmentPage() {
+    public FirstPaymentShipmentPage() {
         PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
-    public void clickOnContinueButton(){
+    public SecondConfirmTheInformationPage clickOnContinueButton(){
         WaitForElement.waitForElementToBeClickable(continueButton);
         continueButton.click();
         logger.info("Clicked on Continue button");
+        return new SecondConfirmTheInformationPage();
     }
 }

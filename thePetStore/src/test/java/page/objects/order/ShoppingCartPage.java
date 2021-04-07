@@ -19,9 +19,10 @@ public class ShoppingCartPage {
         PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
-    public void clickOnProceedToCheckout(){
+    public FirstPaymentShipmentPage clickOnProceedToCheckout(){
         WaitForElement.waitForElementToBeClickable(proceedToCheckoutButton);
         proceedToCheckoutButton.click();
         logger.info("Clicked on Proceed to Checkout button");
+        return new FirstPaymentShipmentPage();
     }
 }
