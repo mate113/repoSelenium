@@ -1,13 +1,12 @@
 package page.objects.order;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import driver.manager.DriverManager;
+import waits.WaitForElement;
 
 public class OrderSummaryPage {
-
-    private WebDriver driver;
 
     @FindBy(className = "messages")
     private WebElement message;
@@ -15,12 +14,13 @@ public class OrderSummaryPage {
     @FindBy(css = "#BackLink a")
     private WebElement returnToMainMenuLink;
 
-    public OrderSummaryPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public OrderSummaryPage() {
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
     public String getMessage(){
-        return message.getText();
+        WaitForElement.waitForElementToBeVisible(message);
+        String orderInfo = message.getText();
+        return orderInfo;
     }
 }

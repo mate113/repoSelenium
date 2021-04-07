@@ -1,26 +1,21 @@
 package tests;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import driver.manager.DriverManager;
+import driver.manager.DriverUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 public class TestBase {
 
-    private static String CHROMEDRIVER_EXE = "src/main/resources/chromedriver.exe";
-    public WebDriver driver;
-
     @BeforeMethod
     public void beforeTest(){
-        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("https://petstore.octoperf.com/");
+        DriverManager.getDriver();
+        DriverUtils.setInitialConfiguration();
+        DriverUtils.navigateTo("https://petstore.octoperf.com/");
     }
 
     @AfterMethod
     public void afterTest(){
-        driver.close();
-        driver.quit();
+        DriverManager.disposeDriver();
     }
 }

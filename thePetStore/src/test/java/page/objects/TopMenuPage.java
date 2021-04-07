@@ -1,23 +1,22 @@
 package page.objects;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import driver.manager.DriverManager;
+import waits.WaitForElement;
 
 public class TopMenuPage {
-
-    private WebDriver driver;
 
     @FindBy(css = "a[href*='signonForm']")
     private WebElement signInLink;
 
-    public TopMenuPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public TopMenuPage() {
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
     public void clickOnSignInLink(){
+        WaitForElement.waitForElementToBeClickable(signInLink);
         signInLink.click();
     }
 }

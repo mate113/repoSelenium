@@ -11,13 +11,13 @@ public class FailedLoginTests extends TestBase {
 
     @Test
     public void incorrectLoginAndPassword(){
-        LandingPage landingPage = new LandingPage(driver);
+        LandingPage landingPage = new LandingPage();
         landingPage.enterTheStore();
 
-        TopMenuPage topMenuPage = new TopMenuPage(driver);
+        TopMenuPage topMenuPage = new TopMenuPage();
         topMenuPage.clickOnSignInLink();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
         loginPage.typeIntoUsernameFiled("badUsername");
         loginPage.typeIntoPasswordFiled("badPassword");
         loginPage.pressLoginButton();
@@ -28,13 +28,13 @@ public class FailedLoginTests extends TestBase {
 
     @Test
     public void incorrectLoginAndCorrectPassword(){
-        LandingPage landingPage = new LandingPage(driver);
+        LandingPage landingPage = new LandingPage();
         landingPage.enterTheStore();
 
-        TopMenuPage topMenuPage = new TopMenuPage(driver);
+        TopMenuPage topMenuPage = new TopMenuPage();
         topMenuPage.clickOnSignInLink();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
         loginPage.typeIntoUsernameFiled("badUsername");
         loginPage.typeIntoPasswordFiled("j2ee");
         loginPage.pressLoginButton();
@@ -45,13 +45,13 @@ public class FailedLoginTests extends TestBase {
 
     @Test
     public void correctLoginAndIncorrectPassword(){
-        LandingPage landingPage = new LandingPage(driver);
+        LandingPage landingPage = new LandingPage();
         landingPage.enterTheStore();
 
-        TopMenuPage topMenuPage = new TopMenuPage(driver);
+        TopMenuPage topMenuPage = new TopMenuPage();
         topMenuPage.clickOnSignInLink();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
         loginPage.typeIntoUsernameFiled("j2ee");
         loginPage.typeIntoPasswordFiled("badPassword");
         loginPage.pressLoginButton();

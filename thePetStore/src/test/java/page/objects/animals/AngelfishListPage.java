@@ -1,13 +1,12 @@
 package page.objects.animals;
 
-import org.openqa.selenium.WebDriver;
+import driver.manager.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import waits.WaitForElement;
 
 public class AngelfishListPage {
-
-    private WebDriver driver;
 
     @FindBy(css = "a[href*='EST-1']")
     private WebElement largeAngelfishLink;
@@ -15,16 +14,17 @@ public class AngelfishListPage {
     @FindBy(css = "a.Button[href*='EST-1']")
     private WebElement largeAngelfishAddToCartButton;
 
-    public AngelfishListPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public AngelfishListPage() {
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
     public void clickOnLargeAngelfishId(){
+        WaitForElement.waitForElementToBeClickable(largeAngelfishLink);
         largeAngelfishLink.click();
     }
 
     public void clickOnAddToCartLargeAngelfish(){
+        WaitForElement.waitForElementToBeClickable(largeAngelfishAddToCartButton);
         largeAngelfishAddToCartButton.click();
     }
 }

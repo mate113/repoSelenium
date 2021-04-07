@@ -1,13 +1,12 @@
 package page.objects;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import driver.manager.DriverManager;
+import waits.WaitForElement;
 
 public class HomePage {
-
-    private WebDriver driver;
 
     @FindBy(id = "Welcome")
     private WebElement welcomeText;
@@ -15,9 +14,8 @@ public class HomePage {
     @FindBy(css = "img[src*='fish_icon']")
     private WebElement fishCategoryText;
 
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public HomePage() {
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
     public boolean isWelcomeContentVisible(){
@@ -25,6 +23,7 @@ public class HomePage {
     }
 
     public void clickOnFishText(){
+        WaitForElement.waitForElementToBeClickable(fishCategoryText);
         fishCategoryText.click();
     }
 }

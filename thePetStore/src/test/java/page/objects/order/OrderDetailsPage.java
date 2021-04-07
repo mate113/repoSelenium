@@ -1,23 +1,22 @@
 package page.objects.order;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import driver.manager.DriverManager;
+import waits.WaitForElement;
 
 public class OrderDetailsPage {
 
-    private WebDriver driver;
-
     @FindBy(name = "newOrder")
-    private WebElement continueButton;
+    private WebElement returnToMainMenuLink;
 
-    public OrderDetailsPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public OrderDetailsPage() {
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
     public void clickOnContinueButton(){
-        continueButton.click();
+        WaitForElement.waitForElementToBeClickable(returnToMainMenuLink);
+        returnToMainMenuLink.click();
     }
 }

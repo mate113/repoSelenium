@@ -1,23 +1,22 @@
 package page.objects.animals;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import driver.manager.DriverManager;
+import waits.WaitForElement;
 
 public class AnimalDetailsPage {
-
-    private WebDriver driver;
 
     @FindBy(css = "a[href*='addItemToCart']")
     private WebElement addItemToCartButton;
 
-    public AnimalDetailsPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public AnimalDetailsPage() {
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
     public void clickOnAddToCartButton(){
+        WaitForElement.waitForElementToBeClickable(addItemToCartButton);
         addItemToCartButton.click();
     }
 }
